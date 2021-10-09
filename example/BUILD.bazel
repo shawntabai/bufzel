@@ -1,7 +1,22 @@
 # gazelle:ignore
 
-load("//build_defs:buf.bzl", "buf_proto_library")
+# You'll need to add this repo in your WORKSPACE file as a remote dependency:
+"""
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
+http_archive(
+    name = "com_github_shawntabai_bufzel21",
+    sha256 = "usewhateveritsuggestsinsteadofthis",
+    urls = [
+        "https://github.com/shawntabai/bufzel/archive/v0.0.1.tar.gz",
+    ],
+)
+"""
+
+# Load the rules in any BUILD package where you use them.
+load("@com_github_shawntabai_bufzel//build_defs:buf.bzl", "buf_proto_library")
+
+# Build an abstract proto (equivalent of `buf build`).
 buf_proto_library(
     name = "helloworld_proto",
     srcs = ["helloworld.proto"],
