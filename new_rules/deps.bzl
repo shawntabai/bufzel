@@ -52,8 +52,6 @@ def go_dependencies():
     go_repository(
         name = "com_github_bufbuild_buf",
         importpath = "github.com/bufbuild/buf",
-        patch_args = ["-p1"],
-        patches = ["//:gazelle/patches/com_github_bufbuild_buf.patch"],
         sum = "h1:lDpAFcCGWL2PATZI+0Np3BXkiQ+65xpNYj+4ZHGDIck=",
         version = "v1.0.0-rc4",
     )

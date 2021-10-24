@@ -1,3 +1,4 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("@bazel_gazelle//:def.bzl", "gazelle")
 
 # gazelle:prefix github.com/shawntabai/bufzel
@@ -11,4 +12,12 @@ gazelle(
         "-prune",
     ],
     command = "update-repos",
+)
+
+go_library(
+    name = "bufzel",
+    srcs = ["tools.go"],
+    importpath = "github.com/shawntabai/bufzel",
+    visibility = ["//visibility:public"],
+    deps = ["@com_github_bufbuild_buf//:buf"],
 )

@@ -4,12 +4,19 @@ Prototypes for Bazel plugin for Buf
 
 ## Strategies
 
-There are a few strategies for prototyping explored in the different subfolders here:
+There are a few strategies for prototyping explored in the different subfolders here.
+
+All of these strategies use Bazel's approach of smaller buildable units (rather than generating all protos together as
+Buf normally does). Generating libraries across multiple packages seems problematic and antithetical to Bazel's model.
 
 ### `new_rules`
 
 The [`new_rules`](./new_rules) subfolder defines new `buf_proto_library` and `go_buf_proto_library` rules for Buf. This
 means that these targets can easily specify Buf options, but they may not play nicely with preexisting rules.
+
+Note: There might be no good reason for `buf_proto_library` to exist. Using the standard `proto_library` rule for
+abstract protos might work fine (we'd just be using `protoc` instead of `buf build` to build the descriptors). Then we'd
+simply have language-specific rules like `go_buf_proto_library` that allow you to specify plugins.
 
 ### `existing_rules`
 
