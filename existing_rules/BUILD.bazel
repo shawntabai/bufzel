@@ -1,0 +1,33 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@bazel_gazelle//:def.bzl", "gazelle")
+
+# gazelle:prefix github.com/shawntabai/bufzel
+gazelle(name = "gazelle")
+
+gazelle(
+    name = "gazelle-update-repos",
+    args = [
+        "-from_file=go.mod",
+        "-to_macro=deps.bzl%go_dependencies",
+        "-prune",
+    ],
+    command = "update-repos",
+)
+
+load("//build_defs:internal/go_buf_proto_library.bzl", "buf_go_proto_compiler")
+
+buf_go_proto_compiler(
+    name = "buf_go_proto_compiler",
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "bufzel",
+    srcs = ["tools.go"],
+    importpath = "github.com/shawntabai/bufzel",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_envoyproxy_protoc_gen_validate//:protoc-gen-validate",
+        "@com_github_grpc_ecosystem_grpc_gateway//v2:grpc-gateway",
+    ],
+)
