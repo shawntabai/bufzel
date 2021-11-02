@@ -1,0 +1,30 @@
+# You'll need to add this repo in your WORKSPACE file as a remote dependency:
+"""
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "com_github_shawntabai_bufzel",
+    sha256 = "usewhateveritsuggestsinsteadofthis",
+    urls = [
+        "https://github.com/shawntabai/bufzel/archive/v0.0.1.tar.gz",
+    ],
+)
+"""
+
+# Load standard proto library rule.
+
+# Load the rule for breaking change tests.
+load("@com_github_shawntabai_bufzel//build_defs:breaking.bzl", "buf_breaking_test")
+
+# Build a proto library.
+proto_library(
+    name = "helloworld_proto",
+    srcs = ["helloworld.proto"],
+    visibility = ["//visibility:public"],
+)
+
+# Add a change detection test.
+buf_breaking_test(
+    name = "helloworld_proto_breaking_test",
+    srcs = ["helloworld.proto"],
+)
