@@ -1,0 +1,32 @@
+workspace(name = "com_github_shawntabai_bufzel")
+
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+# General proto support
+http_archive(
+    name = "rules_proto",
+    sha256 = "66bfdf8782796239d3875d37e7de19b1d94301e8972b3cbd2446b332429b4df1",
+    strip_prefix = "rules_proto-4.0.0",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_proto/archive/refs/tags/4.0.0.tar.gz",
+        "https://github.com/bazelbuild/rules_proto/archive/refs/tags/4.0.0.tar.gz",
+    ],
+)
+
+load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
+
+rules_proto_dependencies()
+
+rules_proto_toolchains()
+
+# Buf binaries loaded from HTTP files, and workspace root rule.
+load("//:buf_deps.bzl", "buf_binaries", "buf_workspace")
+
+buf_binaries()
+
+buf_workspace(
+    # Needed if git repo root and workspace root are not the same
+    relative_to_git_root = "./breaking_test",
+    # Needed because the WORKSPACE file is the only place we have access to this variable
+    workspace_root = __workspace_dir__,
+)
