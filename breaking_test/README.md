@@ -19,7 +19,7 @@ buf_workspace(
 )
 ```
 
-This will create a special external repository that contains two shell scripts:
+This will create a special external repository named `buf_workspace_root` that contains two shell scripts:
 * `workspace_root.sh`: Print the absolute path for the workspace root
 * `workspace_relative.sh`: Print the path for the workspace root relative to the git repo root
 
@@ -31,7 +31,7 @@ This creates the `buf_breaking_test` rule, which uses those workspace folders to
 The script that gets generated for the test follows the following flow:
 
 1. `cd` into the workspace root directory
-2. `cd` into the root directory of the git repo
+2. `cd` into the root directory of the current git repo
 3. Execute the `buf breaking` command with the specified proto files, diffing against the specified git branch
 
 ## Example
