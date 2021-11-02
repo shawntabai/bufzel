@@ -9,6 +9,13 @@ There are a few strategies for prototyping explored in the different subfolders 
 All of these strategies use Bazel's approach of smaller buildable units (rather than generating all protos together as
 Buf normally does). Generating libraries across multiple packages seems problematic and antithetical to Bazel's model.
 
+### `breaking_test`
+
+The [`breaking_test`](./breaking_test) subfolder defines a `buf_breaking_test` rule for Buf. This differs from the one
+in [`rules_proto_grpc`](https://rules-proto-grpc.com/en/latest/lang/buf.html) because it uses the `buf` CLI instead of triggering it via a protoc plugin. This allows it to use git branch diffing to automatically find the source to compare against.
+
+Note: This works, but I'm not super pleased with it. The special repository rule to get the workspace info seemed to be necessary, and the dependence on the git tooling seems very anti-bazel.
+
 ### `new_rules`
 
 The [`new_rules`](./new_rules) subfolder defines new `buf_proto_library` and `go_buf_proto_library` rules for Buf. This

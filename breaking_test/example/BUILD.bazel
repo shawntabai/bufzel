@@ -9,6 +9,11 @@ http_archive(
         "https://github.com/shawntabai/bufzel/archive/v0.0.1.tar.gz",
     ],
 )
+
+load("@com_github_shawntabai_bufzel//:buf_deps.bzl", "buf_binaries", "buf_workspace")
+buf_binaries()
+buf_workspace(workspace_root = __workspace_dir__)
+
 """
 
 # Load standard proto library rule.
